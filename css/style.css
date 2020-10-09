@@ -36,11 +36,8 @@ body {
 
 #slideDisplay {
     background-color: rgb(247, 184, 243);
-    display: inline-flexbox;
-    flex-direction: column;
-    align-content: space-between;
     box-sizing: content-box;
-    /* overflow: hidden;   */
+    overflow: hidden;   
     border: 3px solid black;
     height: 400px;
     width: 99%
@@ -54,10 +51,11 @@ body {
 
 img {
     display: block;
-    position: absolute;
-    height: 300px;
-    border: 6px solid rgb(208, 208, 208);
-    margin: 10% auto;
+    margin: 0 auto;
+    /* height: 300px; */
+    height: 99%;
+    border: 6px solid rgb(255, 255, 255);
+    
 }
 
 .active {

@@ -21,19 +21,33 @@ const fetchSlides = () => {
             item.forEach((child,index)=>{
                 //console.log(index,child.data.url,child.data.thumbnail);
                 addImages(child.data.thumbnail,index);
+                //addImages(child.data.url,index);
+                //if ((child.data.url).includes('i.imgur')){
+                //    addImages(child.data.url,index);
+                //} else {
+                //    addImages(child.data.thumbnail,index);
+                //}
             })
         })
         .catch((error)=>{
             console.log("oh no, theres been an error",error)
         })
 }
-var currentSlide = 0
 
-const showSlideshow =()=> {
-let slides = document.querySelectorAll('.slide')
-slides[currentSlide].classList.remove('hidden');
-console.log(currentSlide);
-currentSlide += 1
+var currentSlide = 0
+const runSlideshow =()=> {
+    let slides = document.querySelectorAll('.slide')
+    slides[currentSlide].classList.remove('hidden');
+    if (currentSlide>0) {
+        slides[currentSlide-1].classList.add('hidden')
+    } else if (currentSlide===0 ) {
+        slides[(slides.length)-1].classList.add('hidden')
+    }; 
+    if (currentSlide<slides.length-1) {
+        currentSlide += 1
+    } else {
+        currentSlide = 0
+    }
 }
 
 
@@ -48,8 +62,7 @@ document.addEventListener('DOMContentLoaded',() => {
     document.getElementById('GO').addEventListener('click',
         function(e) {
             e.preventDefault();
-            console.log('click');
-            showSlideshow();
+            setInterval(runSlideshow,2000)
         })
     })
     
