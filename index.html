@@ -8,11 +8,26 @@
 </head>
 <body>
   <h1>Reddit Slideshow Generator</h1>
+
+  <div class="container">
+    <div id="instructions">
+      Give user instructions on how to use the carousel slideshow here.
+    </div>
+    <div id="loading">
+      Please wait while the images load...
+    </div>
+    <div id="slideShow-container">
+      <button class="slideShowArrows"id = "left-arrow"><</button>
+      <div id="slideDisplay"> </div>
+      <button class="slideShowArrows"id = "right-arrow">></button>
+    </div>
+  </div>
+
   <form id= "form">
-    <input id="input" type="text" value="1">
+    <input id="input" type="text" value="puppies">
     <input type ="submit">
   </form>
-  <ul id="slideShow"> </ul>
+  <button id="GO">GO</button>
   <script src="js/app.js"></script>
 </body>
 </html>
