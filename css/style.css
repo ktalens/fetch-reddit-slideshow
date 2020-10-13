@@ -1,9 +1,11 @@
 body {
-    background-color: rgb(164, 131, 196);
+    background-color: rgb(242, 251, 255);
     text-align: center;
+    font-family: verdana;
 }
 .container {
     box-sizing: border-box;
+    overflow: auto;
     margin: 0 auto;
     width: 90%;
     background-color: rgb(95, 139, 159);
@@ -16,31 +18,41 @@ body {
 }
 
 #instructions {
-    display: none;
+    display: block;
+    position: absolute;
+    background-color: rgb(238, 220, 255);
 }
 
 #loading {
     display: none;
+    position: absolute;
+    background-color: rgba(105, 105, 105, 0.303);
+    height: 50vh;
+    width: 82%;
+    font-size: 16pt;
+}
+#loading p {
+    margin-top: 25vh;
 }
 
 #slideShow-container {
-    background-color: rgb(255, 59, 245);
-    border: 4px solid rgb(7, 255, 81);
     width: 99%;
     display: inline-flex;
     flex-direction: row;
     align-items: center;
     align-content: center;
     justify-content: center;  
+    border: 1px solid rgb(0, 0, 0);
 }
 
 #slideDisplay {
-    background-color: rgb(247, 184, 243);
     box-sizing: content-box;
+    display: flex;
+    justify-content: space-between;
     overflow: hidden;   
-    border: 3px solid black;
-    height: 400px;
-    width: 99%
+    height: 50vh;
+    width: 99%;
+    padding: 2% 0 2% 0;
 }
 
 .slideShowArrows {
@@ -53,7 +65,7 @@ body {
     display: block;
     margin: 0 auto;
     /* height: 300px; */
-    height: 99%;
+    height: 96%;
     border: 6px solid rgb(255, 255, 255);
     
 }
@@ -64,4 +76,26 @@ body {
 
 .hidden {
     display: none;
+}
+section {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: space-around;
+    align-items: center;
+    margin: 5% auto;
+    height: 10vh;
+    background-color: rgba(35, 92, 142, 0.303);
+}
+
+#playbutton, #pausebutton {
+    width: 10%;
+}
+.slideShowArrows {
+    color: whitesmoke;
+    background-color: transparent;
+    border: transparent;
+    font-size: 30pt;
+    text-shadow: 2pt 2pt rgba(0, 0, 0, 0.468);
+    cursor: pointer;
 }

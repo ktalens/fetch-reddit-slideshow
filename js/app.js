@@ -27,13 +27,16 @@ const fetchSlides = () => {
         .then((jsonData)=>{
             //<-- put the list-clearing loop here
             loading.style.display = 'none';
+            playbutton.style.display = 'block';
             let item = jsonData.data.children;
             item.forEach((child,index)=>{
             //check which image address to use 
                 if (child.data.rpan_video) {
                     addImages(index,child.data.rpan_video.scrubber_media_url)
-                } else  if (child.data.url.includes('//i.redd')) {
+                } else  if (child.data.url.includes('//i.redd')&& child.data.url.includes('.gif')===false) {
                     addImages(index,child.data.url);
+                } else  if (child.data.url.includes('//i.redd')&& child.data.url.includes('.gif')===true) {
+                    addImages(index,child.data.thumbnail);
                 } else if (child.data.thumbnail.includes('//b.thumbs.')) {
                     addImages(index,child.data.thumbnail);
                 }
@@ -45,6 +48,7 @@ const fetchSlides = () => {
 };
 
 var currentSlide = 0
+
 const runSlideshow =()=> {
     let slides = document.querySelectorAll('.slide')
     slides[currentSlide].classList.remove('hidden');
@@ -61,20 +65,46 @@ const runSlideshow =()=> {
     }
 };
 
-
+const reset =() => {
+    form.style.display = 'block';
+    input.value = '';
+    clearInterval(runSlideshow);
+    while (slideDisplay.children) {
+        slideDisplay.removeChild(slideDisplay.children[0])
+    }
+};
 
 
 
 document.addEventListener('DOMContentLoaded',() => {
     form.addEventListener('submit',(e)=>{
         e.preventDefault();
+        form.style.display = 'none';
         loading.style.display = 'block';
-        console.log('user input is: '+input.value)
+        instructions.style.display = 'none';
+        resetbutton.style.display = 'block';
         fetchSlides();
-    document.getElementById('GO').addEventListener('click',
+    playbutton.addEventListener('click',
         function(e) {
             e.preventDefault();
-            setInterval(runSlideshow,2000)
+            playbutton.style.display = 'none';
+            pausebutton.style.display = 'block';
+            slideTiming= setInterval(runSlideshow,2000)
+        })
+    pausebutton.addEventListener('click',
+        function(e) {
+            e.preventDefault();
+            playbutton.style.display = 'block';
+            pausebutton.style.display = 'none';
+            clearInterval(slideTiming)
+        })
+    resetbutton.addEventListener('click',
+        function(e) {
+            e.preventDefault();
+            playbutton.style.display = 'none';
+            pausebutton.style.display = 'none';
+            clearInterval(slideTiming);
+            reset();
         })
     })
     
