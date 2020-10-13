@@ -49,7 +49,7 @@ body {
     justify-content: space-between;
 }
 
-img {
+.slide {
     display: block;
     margin: 0 auto;
     /* height: 300px; */

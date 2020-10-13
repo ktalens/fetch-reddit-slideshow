@@ -1,6 +1,6 @@
-const requestUrl = 'https://www.reddit.com/search.json?q='
+const requestUrl = 'https://www.reddit.com/search.json?q=';
 
-const addImages = (searchItem,index)=> {
+const addImages = (index,searchItem)=> {
     //create a new image, set the source, append to slideDisplay div
     let imageSlide = document.createElement('img');
     imageSlide.setAttribute('src',searchItem);
@@ -8,7 +8,16 @@ const addImages = (searchItem,index)=> {
     imageSlide.classList.add('hidden');
     imageSlide.id =index;
     slideDisplay.appendChild(imageSlide);
-}
+};
+
+// const checkUrl  = (index, source)=> {
+//     //TESTING IMAGE LINKS
+//     let listSource = document.createElement('li');
+//     let testImage = document.createElement('img');
+//     testImage.setAttribute('src',source);
+//     listSource.appendChild(testImage);
+//     tempList.appendChild(listSource);
+// };
 
 const fetchSlides = () => {
     fetch(requestUrl+input.value) //pending, resolved or rejected, then move onto the next...
@@ -17,27 +26,29 @@ const fetchSlides = () => {
         })  
         .then((jsonData)=>{
             //<-- put the list-clearing loop here
-            let item = jsonData.data.children
+            loading.style.display = 'none';
+            let item = jsonData.data.children;
             item.forEach((child,index)=>{
-                //console.log(index,child.data.url,child.data.thumbnail);
-                addImages(child.data.thumbnail,index);
-                //addImages(child.data.url,index);
-                //if ((child.data.url).includes('i.imgur')){
-                //    addImages(child.data.url,index);
-                //} else {
-                //    addImages(child.data.thumbnail,index);
-                //}
-            })
+            //check which image address to use 
+                if (child.data.rpan_video) {
+                    addImages(index,child.data.rpan_video.scrubber_media_url)
+                } else  if (child.data.url.includes('//i.redd')) {
+                    addImages(index,child.data.url);
+                } else if (child.data.thumbnail.includes('//b.thumbs.')) {
+                    addImages(index,child.data.thumbnail);
+                }
+             })
         })
         .catch((error)=>{
-            console.log("oh no, theres been an error",error)
+            console.log("ERROR MESSAGE: ",error)
         })
-}
+};
 
 var currentSlide = 0
 const runSlideshow =()=> {
     let slides = document.querySelectorAll('.slide')
     slides[currentSlide].classList.remove('hidden');
+    
     if (currentSlide>0) {
         slides[currentSlide-1].classList.add('hidden')
     } else if (currentSlide===0 ) {
@@ -48,7 +59,7 @@ const runSlideshow =()=> {
     } else {
         currentSlide = 0
     }
-}
+};
 
 
 
@@ -57,6 +68,7 @@ const runSlideshow =()=> {
 document.addEventListener('DOMContentLoaded',() => {
     form.addEventListener('submit',(e)=>{
         e.preventDefault();
+        loading.style.display = 'block';
         console.log('user input is: '+input.value)
         fetchSlides();
     document.getElementById('GO').addEventListener('click',
@@ -65,5 +77,6 @@ document.addEventListener('DOMContentLoaded',() => {
             setInterval(runSlideshow,2000)
         })
     })
+    
     
 })
